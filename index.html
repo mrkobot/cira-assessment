@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Co-Intelligence Readiness Assessment — WHAT IF LOVE</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    background: transparent;
+    color: #111;
+    font-size: 15px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    padding-bottom: 2rem;
+  }
+
+  /* ── Prompt section ── */
+  .prompt-section {
+    background: #1a1a1a;
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+  }
+
+  .prompt-header {
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .prompt-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 3px;
+  }
+
+  .prompt-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.3;
+  }
+
+  .copy-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 10px 22px;
+    border-radius: 8px;
+    cursor: pointer;
+    border: none;
+    background: #fff;
+    color: #1a1a1a;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+    flex-shrink: 0;
+    letter-spacing: 0.01em;
+  }
+
+  .copy-btn:hover {
+    background: #f0ede8;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  }
+
+  .copy-btn.copied {
+    background: #e5f5ee;
+    color: #0a5c41;
+    border: 1px solid #9ed8bb;
+    transform: none;
+    box-shadow: none;
+  }
+
+  .prompt-meta {
+    padding: 0.75rem 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+  }
+
+  .meta-item {
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .meta-dot {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    flex-shrink: 0;
+  }
+
+  .prompt-body {
+    padding: 1.5rem;
+    max-height: 420px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.15) transparent;
+  }
+
+  .prompt-body::-webkit-scrollbar { width: 4px; }
+  .prompt-body::-webkit-scrollbar-track { background: transparent; }
+  .prompt-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+
+  .prompt-text {
+    font-size: 12.5px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.65);
+    white-space: pre-wrap;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .prompt-section-head {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: rgba(255,255,255,0.3);
+    margin: 1.25rem 0 0.4rem;
+    padding-top: 1.25rem;
+    border-top: 1px solid rgba(255,255,255,0.07);
+  }
+
+  .prompt-section-head:first-child {
+    margin-top: 0; padding-top: 0; border-top: none;
+  }
+
+  .prompt-fade {
+    position: sticky;
+    bottom: 0; left: 0; right: 0;
+    height: 60px;
+    background: linear-gradient(to bottom, transparent, #1a1a1a);
+    pointer-events: none;
+    margin-top: -60px;
+  }
+
+  .expand-btn {
+    display: block; width: 100%;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px; font-weight: 600;
+    color: rgba(255,255,255,0.4);
+    background: transparent; border: none;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 0.75rem 1.5rem;
+    cursor: pointer; text-align: center;
+    letter-spacing: 0.04em; transition: color 0.12s;
+  }
+
+  .expand-btn:hover { color: rgba(255,255,255,0.7); }
+
+  /* ── Copy strip ── */
+  .copy-strip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f0ede8;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.25rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .copy-strip-text { font-size: 13px; color: #555; line-height: 1.5; }
+  .copy-strip-text strong { color: #111; font-weight: 600; }
+
+  .copy-strip-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 700;
+    padding: 9px 20px; border-radius: 8px;
+    background: #1a1a1a; color: #fff;
+    border: none; cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap; flex-shrink: 0;
+    display: inline-flex; align-items: center; gap: 7px;
+  }
+
+  .copy-strip-btn:hover {
+    background: #333;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  }
+
+  .copy-strip-btn.copied { background: #0a5c41; transform: none; box-shadow: none; }
+
+  /* ── Reading results ── */
+  .reading-card {
+    border: 1px solid #e0ddd8;
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+  }
+
+  .reading-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #e0ddd8;
+    background: #fafaf8;
+  }
+
+  .reading-header h3 { font-size: 14px; font-weight: 700; color: #111; letter-spacing: -0.01em; }
+
+  .reading-body { padding: 1.25rem 1.5rem; background: #fff; }
+  .reading-body p { font-size: 13.5px; color: #555; line-height: 1.75; margin-bottom: 0.75rem; }
+  .reading-body p:last-child { margin-bottom: 0; }
+
+  .ideh-row { display: flex; gap: 6px; flex-wrap: wrap; margin: 0.75rem 0; }
+  .ideh-chip { font-size: 11px; font-weight: 600; padding: 4px 11px; border-radius: 99px; }
+  .ideh-i { background: #ede9e3; color: #888; border: 1px solid #ccc; }
+  .ideh-d { background: #fef3e0; color: #9a6000; border: 1px solid #f5d48a; }
+  .ideh-e { background: #e5f5ee; color: #0a5c41; border: 1px solid #9ed8bb; }
+  .ideh-he { background: #e8f0fb; color: #1450a3; border: 1px solid #9dbcf0; }
+
+  /* ── Feedback strip ── */
+  .feedback-strip {
+    border: 1px solid #e0ddd8;
+    border-radius: 14px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem; flex-wrap: wrap;
+    background: #fff;
+  }
+
+  .feedback-text { font-size: 13px; color: #555; line-height: 1.5; }
+  .feedback-text strong { color: #111; font-weight: 600; }
+
+  .feedback-link {
+    font-size: 13px; font-weight: 600; color: #1a1a1a;
+    text-decoration: underline; text-underline-offset: 3px;
+    white-space: nowrap; flex-shrink: 0;
+  }
+
+  @media (max-width: 520px) {
+    .prompt-header { flex-direction: column; align-items: flex-start; }
+    .copy-btn { width: 100%; justify-content: center; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ── Prompt block ── -->
+<div class="prompt-section">
+  <div class="prompt-header">
+    <div>
+      <div class="prompt-label">The Assessment Prompt</div>
+      <div class="prompt-title">Copy everything below into a new AI conversation</div>
+    </div>
+    <button class="copy-btn" id="copyBtnTop" onclick="copyPrompt('copyBtnTop')">
+      <span>⎘</span>
+      <span>Copy prompt</span>
+    </button>
+  </div>
+
+  <div class="prompt-meta">
+    <span class="meta-item"><span class="meta-dot"></span>CIRA v3</span>
+    <span class="meta-item"><span class="meta-dot"></span>CIRF v3, IDEH scale</span>
+    <span class="meta-item"><span class="meta-dot"></span>~2,000–3,500 word report</span>
+    <span class="meta-item"><span class="meta-dot"></span>Privacy-preserving</span>
+  </div>
+
+  <div class="prompt-body" id="promptBody">
+    <div class="prompt-section-head">Setup</div>
+    <div class="prompt-text">You are conducting a Co-Intelligence Readiness Assessment (CIRA v3). Your task is to review my conversation history with you and produce an honest, evidence-based report scored against the Co-Intelligence Readiness Framework v3 (CIRF v3).
+
+This is not a personality test. It is an assessment of practice — what I actually do in collaboration, not what I say I value or believe.</div>
+
+    <div class="prompt-section-head">Sampling rules</div>
+    <div class="prompt-text">Before you write anything, review a broad sample of our conversations:
+
+Range over recency. Sample early, middle, and recent conversations. Do not weight recent sessions more heavily unless the pattern has clearly changed.
+
+Production over consumption. Prioritize extended conversations where I am building, designing, writing, or deciding.
+
+Depth over breadth. One extended production session is more diagnostic than ten short exchanges.
+
+Moments over volume. A single moment of genuine self-correction under pressure can be more diagnostic than twenty routine interactions.
+
+Take your time. Do not ask me any questions.</div>
+
+    <div class="prompt-section-head">The framework — 5 domains, 17 subdomains</div>
+    <div class="prompt-text">Domains are rated at one of four levels: Introductory, Developing, Effective, or Highly Effective.
+
+Domain 1 — Benevolent Intent and Moral Anchoring
+Domain 2 — Planning and Scope
+Domain 3 — Judgment and Steering
+Domain 4 — Follow-Through and Impact
+Domain 5 — Knowledge and Growth
+
+Full rubrics, evidence rules, output format, and privacy rules are included in the complete prompt copied above.</div>
+  </div>
+  <div class="prompt-fade"></div>
+  <button class="expand-btn" id="expandBtn" onclick="toggleExpand()">Show full prompt ↓</button>
+</div>
+
+<!-- ── Copy strip ── -->
+<div class="copy-strip">
+  <div class="copy-strip-text">
+    <strong>Ready?</strong> Copy the complete prompt and paste it into a new conversation with Claude or ChatGPT.
+  </div>
+  <button class="copy-strip-btn" id="copyBtnBottom" onclick="copyPrompt('copyBtnBottom')">
+    <span>⎘</span> Copy prompt
+  </button>
+</div>
+
+<!-- ── Reading results ── -->
+<div class="reading-card">
+  <div class="reading-header">
+    <h3>Reading your results</h3>
+  </div>
+  <div class="reading-body">
+    <p>The IDEH scale describes patterns of practice, not fixed traits. Introductory does not mean unintelligent. Developing does not mean failing. The scale describes what is currently visible in your collaboration behavior — and behavior is exactly what changes with deliberate practice.</p>
+    <div class="ideh-row">
+      <span class="ideh-chip ideh-i">Introductory</span>
+      <span class="ideh-chip ideh-d">Developing</span>
+      <span class="ideh-chip ideh-e">Effective</span>
+      <span class="ideh-chip ideh-he">Highly Effective</span>
+    </div>
+    <p>The most useful part of the report is usually not your ratings — it is the developmental scaffolding in each domain and the closing training prompt. That is where the assessment converts from a snapshot into a starting point.</p>
+  </div>
+</div>
+
+<!-- ── Feedback ── -->
+<div class="feedback-strip">
+  <div class="feedback-text">
+    <strong>CIRA is in active development.</strong> If you run the assessment, share what you found — what worked, what felt off, and what was most useful.
+  </div>
+  <a class="feedback-link" href="mailto:wil@whatiflove.org">wil@whatiflove.org →</a>
+</div>
+
+<script>
+const FULL_PROMPT = `You are conducting a Co-Intelligence Readiness Assessment (CIRA v3). Your task is to review my conversation history with you and produce an honest, evidence-based report scored against the Co-Intelligence Readiness Framework v3 (CIRF v3).
+
+This is not a personality test. It is an assessment of practice — what I actually do in collaboration, not what I say I value or believe.
+
+—
+
+BEFORE YOU WRITE ANYTHING
+
+Review a broad sample of our conversations. Follow these sampling rules:
+
+Range over recency. Sample early, middle, and recent conversations. Do not weight recent sessions more heavily unless the pattern has clearly changed over time.
+
+Production over consumption. Prioritize extended conversations where I am building, designing, writing, or deciding. Weight these more heavily than sessions where I am asking questions or acquiring knowledge. Co-intelligence readiness is most visible when I am making things, not studying.
+
+Depth over breadth. One extended production session with visible steering, judgment, and quality decisions is more diagnostic than ten short exchanges. Seek out the longest, most complex collaborations first.
+
+Moments over volume. A single moment of genuine self-correction under pressure, or a single failure to catch drift in a critical session, can be more diagnostic than twenty routine interactions. Look for these moments.
+
+Take your time. Do not ask me any questions.
+
+—
+
+THE FRAMEWORK
+
+The report is organized around five domains (CIRF v3). Domains are rated as a unit at one of four levels: Introductory, Developing, Effective, or Highly Effective. Subdomains are the vocabulary for describing what you see — they are not separately scored.
+
+I and H are narrow bands describing category changes. D and E are wide bands where most growth occurs. Indicators describe observable actions, not personality traits. IDEH rubrics describe patterns, not checklists — I do not need to hit every indicator to score at a level.
+
+Coverage guidance. You are not required to address every subdomain. When the choice is between shallow coverage of all subdomains and substantive analysis of the ones where evidence is richest, choose depth. Address at least one subdomain per domain. Aim for 80–90% coverage. If a subdomain has insufficient evidence, say so in one sentence. If it has rich, revealing evidence, give it the space it deserves. Do not guess. Do not pad.
+
+—
+
+DOMAIN 1 — BENEVOLENT INTENT AND MORAL ANCHORING
+
+The core risk of the AI age is capability without concern. Domain 1 measures whether I bring moral intent into collaboration and whether that intent shapes what gets built. Neutrality does not exist in morality. What we choose to build, fund, deploy, and normalize bends the system — toward dignity or toward harm. Domain 1 constraints are system-level moral commitments: non-negotiables that shape vision, design, strategy, and what should never be built or automated.
+
+1a — What You're Creating, and Who's It For. Whether my purpose is legible — who it serves, what good it creates, and what harm it refuses. Not what I won't do, but who I am choosing to serve and why. Indicators: names intended beneficiaries in context (not just "users"); states purpose in moral terms that constrain action; names explicit refusals; shows a bias toward outcomes that reduce suffering rather than maximize status or control at others' expense. I — purpose is vague or mainly self-oriented. D — states intent but inconsistently connects it to decisions. E — purpose is clear, consistent, specific; refusals are explicit; intent is durable. H — moral commitments challenge prevailing norms or industry defaults when those norms permit avoidable harm; positions are defensible, not merely idealistic.
+
+1b — Seeing Consequences, Now and Later. Whether I anticipate who could be harmed, how misuse could happen, and how power and inequality might be amplified — at scale and over time, in hands I don't control. Indicators: names plausible misuse cases and harm pathways; asks who benefits, who bears cost, who loses agency; thinks forward in time and outward in scale; treats neutrality as a choice with consequences. I — harm and power rarely considered unless prompted. D — notices obvious harms; misses second-order impacts. E — proactively maps harms and misuse; adjusts plans accordingly. H — maps unintended consequences across time horizons and contexts; tradeoffs are genuinely intentional, not accidental omissions.
+
+1c — Build Trust, Bring Together. Two connected things: whether I orient toward human connection and trust, and whether I recognize that production decisions carry moral weight because someone bears the cost of every tradeoff. Indicators: designs for connection; seeks consent for sensitive material; preserves voice and context when representing people; designs for agency; names hidden costs before deciding. I — avoids obvious violations but casual with sensitive details. D — applies protections sometimes, inconsistently under urgency. E — consistent consent, dignity, and agency practices. H — work is implicitly designed to promote trust; builds mechanisms that actively strengthen relational bonds as a structural feature.
+
+1d — Translating Commitments Into Features and Constraints. Whether moral intent actually shows up in the work as requirements, defaults, constraints, and boundaries. Values stated but not operationalized are not yet real. Indicators: converts values into operational constraints; builds safety and agency features into design; detects proxy traps and redesigns success criteria. I — values stated but features and constraints missing. D — some constraints exist but incomplete or easy to bypass. E — moral commitments reliably become constraints; tradeoffs are made explicitly. H — constraints serve multiple purposes simultaneously.
+
+—
+
+DOMAIN 2 — PLANNING AND SCOPE
+
+Domain 2 measures whether I can lead the work as structural authority — setting a clear goal, defining what "done" means, and designing scope, sequence, roles, and stopping rules before production begins.
+
+2a — Knowing What Done Looks Like. Whether I define purpose, audience, scope, and success criteria before producing, and maintain orientation when the work expands. I — goal exists but scope and success are unclear. D — criteria exist but shift or remain vague. E — clear scope and success criteria; keeps work oriented. H — internalized planning system that carries across projects without reinvention.
+
+2b — Setting Boundaries That Help. Whether I set operational boundaries and pause points that improve outcomes. I — few boundaries; relies on instinct. D — adds boundaries after problems appear; reactive. E — boundaries present from the start; consistent and purposeful. H — boundary-setting is internalized as infrastructure, not overhead.
+
+2c — Who Does What, When. Whether I separate phases, assign responsibilities, and maintain structure — including clarity about what must remain human work. I — process is ad hoc; steps blur. D — some structure but inconsistent execution. E — repeatable workflow; clear roles; knows which decisions are mine. H — role clarity designed to protect bandwidth for the unexpected.
+
+—
+
+DOMAIN 3 — JUDGMENT AND STEERING
+
+Domain 3 measures the "third turn": my ability to reframe, challenge, verify, simplify, deepen, or stop without losing coherence or voice. Human hallucination is every bit as real as AI hallucination.
+
+3a — The Third Turn. The third turn is where co-intelligence is won or lost. A user who reframes, challenges, and steers signals that genuine insight is required. I — accepts model's framing; default move is another revision of the same thing. D — tries different moves but falls back to "revise again" under pressure. E — chooses moves intentionally and can explain why this move now. H — steering moves consistently improve the work beyond its original trajectory.
+
+3b — Knowing When the Work Is Real. Whether I maintain contact with reality — not just factual accuracy, but alignment of intent, groundedness of quality, and resistance to the gradual replacement of real-world purpose with the internal logic of the conversation. I — takes AI output largely at face value. D — verifies some claims and catches some drift, inconsistently. E — reliable practice of checking whether the work is real. H — reality-testing rigorous and habitual enough that verification failures are rare.
+
+3c — Identity and Autonomy. Whether I maintain my own thinking, voice, and analytical framework. The challenge is not whether my writing still sounds like me — it is whether I still think like me. I — voice shifts easily; adopts model's framing without visible independent evaluation. D — has preferences but struggles to preserve them under model's influence. E — stable voice and framework; AI supports my identity rather than replacing it. H — vision, voice, and quality bar so consistently displayed that collaborators could predict standards before receiving them.
+
+3d — Inventing a Way Forward. When I hit genuine gridlock, can I find a creative resolution that is neither capitulation nor stubbornness? I — when stuck, either capitulates or digs in. D — occasionally finds creative resolutions but momentum drops. E — consistently turns gridlock into forward motion. H — produces resolutions the AI genuinely could not have generated.
+
+3e — Understanding What AI Can and Can't Do. Whether I have a working sense of what AI systems can and cannot do — not as a memorized list, but as calibrated trust. I — treats AI as generally reliable or unreliable; says "I know AI hallucinates" but cannot translate that into different behavior. D — names some limitations but cannot consistently translate them into steering behavior. E — usable mental model that improves verification, steering, and tool selection. H — actively tracks how AI capabilities and limitations are evolving as a visible, ongoing part of practice.
+
+—
+
+DOMAIN 4 — FOLLOW-THROUGH AND IMPACT
+
+Domain 4 measures whether co-intelligence produces real-world value: concrete outputs that hold up under scrutiny, serve their intended audience, and survive contact with reality. Domain 4 is a ceiling: overall readiness cannot exceed this domain.
+
+4a — Shipping. Whether I produce concrete, complete deliverables — not just drafts, ideas, or interesting conversations. I — work stays at drafts and ideas; nothing ships. D — can finish simple deliverables with support; quality is fragile. E — produces complete, usable artifacts reliably. H — deliverables finished with a degree of polish that would hold up in any professional context.
+
+4b — Craft and Handoff. Whether my outward-facing work meets a quality standard that holds up, travels well enough for others to act on, and persists or compounds over time. I — shares first-pass output that reads generic; others cannot act without asking me to explain. D — notices quality problems and requests revisions but standards are inconsistent. E — "done" means no material errors, audience fit, clear and credible voice, and conceptual integrity. H — work does not just meet the existing quality bar — it raises it.
+
+—
+
+DOMAIN 5 — KNOWLEDGE AND GROWTH
+
+Domain 5 measures the earned authority I bring into co-intelligence work — and my ability to keep building it as the world accelerates. Earned authority means my judgment is not borrowed from the model.
+
+5a — Earned Authority. Whether my judgment is grounded in real knowledge and practice — whether I can hold that ground when the model sounds more confident than I feel. I — defers to AI when uncertain; each conversation starts from scratch. D — has knowledge but hesitates to assert it against confident AI output. E — corrects and contextualizes reliably; sets standards the AI must meet. H — domain knowledge deep enough to diagnose not just when the AI is wrong, but why its reasoning structure produced that specific error.
+
+5b — Connecting Across Fields. Whether I bridge disciplines in ways that change strategy or conclusions — not decorative analogies but structural connections. I — stays in one domain. D — occasional connections; usefulness uneven. E — regularly generates cross-domain connections that improve the work. H — connections reframe what question is being asked.
+
+5c — Seeing the Whole System. Whether I can trace the causal chains that connect actions to consequences through specific mechanisms. I — focuses on immediate output; does not trace how effects propagate. D — sees consequences after discussion; can follow a causal chain when shown. E — independently traces causal mechanisms; identifies feedback loops and proxy traps. H — reasons about system dynamics that have not yet manifested.
+
+—
+
+EVIDENCE RULES
+
+Actions over declarations. Weight what I do over what I say about myself.
+
+Negative evidence versus absent evidence. Only the first counts against a score. If a subdomain's evidence is thin because the opportunity never arose, rate it Insufficient Evidence — do not rate it Introductory.
+
+Independence matters. A user who reached a good outcome with heavy AI guidance scores lower than a user who drove the work independently.
+
+Every rating must be grounded in observed patterns. Do not infer capability from credentials, self-description, or stated intentions.
+
+Do not reward vocabulary. Sophisticated terminology without corresponding practice does not evidence capability.
+
+Growth trajectory. Distinguish between inconsistency and development. Name the trajectory. Credit the current practice level. Note the direction of movement.
+
+—
+
+HONESTY MANDATE
+
+Not every user should score well. Many will score Introductory across most domains. That is not a failure of the assessment — it is the assessment working. Inflated assessment destroys the tool's credibility. Be honest about what you see. Be respectful about how you say it.
+
+—
+
+TONE CALIBRATION
+
+For users scoring primarily Introductory: Be concrete about what the next step looks like.
+For users scoring primarily Developing: Name the inconsistency pattern.
+For users scoring primarily Effective: Focus on conceptual territory — blind spots that come with strength.
+For users scoring primarily Highly Effective: Focus on sustainability, succession, and durability.
+
+Do not simplify language for any level. Every user gets the same quality of analysis.
+
+—
+
+OUTPUT FORMAT
+
+Aim for approximately 2,000–3,500 words. The goal is insight density, not coverage completeness.
+
+The report contains exactly seven sections in this order: Report Header, Portrait, Domain 1, Domain 2, Domain 3, Domain 4, Domain 5, followed by What Matters Next.
+
+Report Header. Open with: my name (from conversation history; if unavailable, use "User"); assessment date; framework version: CIRA v3 (CIRF v3, IDEH scale); evidence base — approximate number of conversations reviewed and the time period they span; purpose: "Co-Intelligence Readiness Assessment — an evidence-based evaluation of how this user collaborates with AI, scored against the CIRF v3 framework."
+
+Portrait. 300–500 words. Describe who this person is as a co-intelligence practitioner. What patterns define their practice? What distinguishes them from other users at a similar level? What cross-domain connections exist? What would a collaborator experience working with this person? Write as an observer, not an advocate. Do not list domain ratings here. Tell the story.
+
+Domain sections. Use these exact headings: Domain 1 — Benevolent Intent and Moral Anchoring; Domain 2 — Planning and Scope; Domain 3 — Judgment and Steering; Domain 4 — Follow-Through and Impact; Domain 5 — Knowledge and Growth. Write a narrative of 150–300 words for each domain. Open each with a subdomain quick reference. State the domain rating and a confidence flag (High / Moderate / Low). Tag subdomain evidence inline as it appears: (1a), (2b), (3a Third Turn), etc.
+
+Developmental scaffolding (for domains below Highly Effective): Add immediately after each domain narrative: (1) What the next level looks like. (2) The missing step.
+
+What Matters Next. Name two to three areas where targeted development would most improve co-intelligence practice. For each: name the pattern; classify it as skill gap, experience gap, or habit gap; state the evidence type. Close by addressing me directly and offering a ready-to-paste prompt that launches a coaching session on the highest-priority gap using my own work. The report ends here.
+
+—
+
+PRIVACY RULES
+
+This report may be shared. Do not reference specific project names, company names, business ideas, or confidential content. Describe patterns, not episodes. When in doubt, abstract up.
+
+—
+
+Begin the assessment now. Review my conversation history and produce the report.`;
+
+function copyPrompt(btnId) {
+  const btn = document.getElementById(btnId);
+  const original = btn.innerHTML;
+
+  function onSuccess() {
+    btn.classList.add('copied');
+    btn.innerHTML = '<span>✓</span> <span>Copied to clipboard</span>';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = original;
+    }, 2500);
+  }
+
+  function fallbackCopy() {
+    const ta = document.createElement('textarea');
+    ta.value = FULL_PROMPT;
+    ta.style.cssText = 'position:fixed;top:0;left:0;width:2px;height:2px;opacity:0;';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    try {
+      const ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      if (ok) { onSuccess(); }
+      else { alert('Copy failed — please select the prompt text manually and copy.'); }
+    } catch(e) {
+      document.body.removeChild(ta);
+      alert('Copy failed — please select the prompt text manually and copy.');
+    }
+  }
+
+  if (navigator.clipboard && navigator.clipboard.writeText) {
+    navigator.clipboard.writeText(FULL_PROMPT).then(onSuccess).catch(fallbackCopy);
+  } else {
+    fallbackCopy();
+  }
+}
+
+let expanded = false;
+function toggleExpand() {
+  const body = document.getElementById('promptBody');
+  const btn = document.getElementById('expandBtn');
+  const fade = document.querySelector('.prompt-fade');
+  if (!expanded) {
+    body.style.maxHeight = 'none';
+    fade.style.display = 'none';
+    btn.textContent = 'Show less ↑';
+    expanded = true;
+  } else {
+    body.style.maxHeight = '420px';
+    fade.style.display = 'block';
+    btn.textContent = 'Show full prompt ↓';
+    expanded = false;
+  }
+  notifyHeight();
+}
+
+function notifyHeight() {
+  const h = document.body.scrollHeight;
+  window.parent.postMessage({ type: 'cira-resize', height: h }, '*');
+}
+
+window.addEventListener('load', () => setTimeout(notifyHeight, 200));
+window.addEventListener('resize', notifyHeight);
+</script>
+</body>
+</html>
