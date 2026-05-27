@@ -6,7 +6,7 @@
 <title>Co-Intelligence Readiness Assessment — WHAT IF LOVE</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700;9..40,800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,300&display=swap" rel="stylesheet">
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -14,119 +14,293 @@
     font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, sans-serif;
     background: transparent;
     color: #111;
-    padding: 1.5rem;
-    margin: 0;
     font-size: 15px;
     line-height: 1.6;
     -webkit-font-smoothing: antialiased;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
+    padding-bottom: 2rem;
   }
 
-  .card {
-    background: #ffffff;
-    border: 1px solid #e0ddd8;
+  .prompt-section {
+    background: #1a1a1a;
     border-radius: 14px;
-    padding: 2.5rem 2rem;
-    width: 100%;
-    max-width: 720px;
-    text-align: center;
+    overflow: hidden;
+    margin-bottom: 1.25rem;
   }
 
-  .eyebrow {
-    font-size: 0.75rem;
-    font-weight: 600;
+  .prompt-header {
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .prompt-label {
+    font-size: 11px;
+    font-weight: 700;
     letter-spacing: 0.1em;
     text-transform: uppercase;
-    color: #888;
-    margin: 0 0 1rem;
+    color: rgba(255,255,255,0.35);
+    margin-bottom: 3px;
   }
 
-  .headline {
-    font-size: clamp(1.4rem, 5vw, 2.0rem);
-    font-weight: 700;
-    line-height: 1.2;
-    letter-spacing: -0.02em;
-    color: #111;
-    margin: 0 0 0.75rem;
-  }
-
-  .headline .sub {
-    display: block;
-  }
-
-  .subhead {
-    font-size: clamp(0.8rem, 3vw, 0.9rem);
-    font-weight: 400;
-    color: #555;
-    line-height: 1.6;
-    margin: 0 0 1.75rem;
-  }
-
-  .pace {
-    font-size: clamp(1rem, 4vw, 1.25rem);
-    font-weight: 800;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: #111;
-    margin: 1.5rem 0 1rem;
+  .prompt-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #fff;
+    line-height: 1.3;
   }
 
   .copy-btn {
     font-family: 'DM Sans', sans-serif;
-    font-size: 15px;
-    font-weight: 600;
-    padding: 14px 28px;
+    font-size: 13px;
+    font-weight: 700;
+    padding: 10px 22px;
     border-radius: 8px;
     cursor: pointer;
-    border: 1.5px solid #1a1a1a;
-    background: #1a1a1a;
-    color: #fff;
-    letter-spacing: 0.01em;
+    border: none;
+    background: #fff;
+    color: #1a1a1a;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     transition: all 0.15s ease;
-    display: inline-block;
+    white-space: nowrap;
+    flex-shrink: 0;
+    letter-spacing: 0.01em;
   }
 
   .copy-btn:hover {
-    background: #fff;
-    color: #1a1a1a;
+    background: #f0ede8;
     transform: translateY(-1px);
-    box-shadow: 0 4px 10px rgba(0,0,0,0.12);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
   }
+
   .copy-btn.copied {
-    background: #ffffff !important;
-    color: #000000 !important;
-    border-color: #000000 !important;
+    background: #e5f5ee;
+    color: #0a5c41;
+    border: 1px solid #9ed8bb;
+    transform: none;
+    box-shadow: none;
   }
 
-  .trust {
-    font-size: 0.85rem;
-    color: #999;
-    margin: 0.75rem 0 0;
+  .prompt-meta {
+    padding: 0.75rem 1.5rem;
+    border-bottom: 1px solid rgba(255,255,255,0.06);
+    display: flex;
+    gap: 1.5rem;
+    flex-wrap: wrap;
   }
 
-  .trust strong {
-    color: #777;
-    font-weight: 600;
+  .meta-item {
+    font-size: 11px;
+    color: rgba(255,255,255,0.35);
+    display: flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  .meta-dot {
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.25);
+    flex-shrink: 0;
+  }
+
+  .prompt-body {
+    padding: 1.5rem;
+    max-height: 420px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: rgba(255,255,255,0.15) transparent;
+    transition: max-height 0.3s ease;
+  }
+
+  .prompt-body::-webkit-scrollbar { width: 4px; }
+  .prompt-body::-webkit-scrollbar-track { background: transparent; }
+  .prompt-body::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 4px; }
+
+  .prompt-text {
+    font-size: 12.5px;
+    line-height: 1.8;
+    color: rgba(255,255,255,0.65);
+    white-space: pre-wrap;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  .prompt-fade {
+    position: sticky;
+    bottom: 0; left: 0; right: 0;
+    height: 60px;
+    background: linear-gradient(to bottom, transparent, #1a1a1a);
+    pointer-events: none;
+    margin-top: -60px;
+  }
+
+  .expand-btn {
+    display: block; width: 100%;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 12px; font-weight: 600;
+    color: rgba(255,255,255,0.4);
+    background: transparent; border: none;
+    border-top: 1px solid rgba(255,255,255,0.08);
+    padding: 0.75rem 1.5rem;
+    cursor: pointer; text-align: center;
+    letter-spacing: 0.04em; transition: color 0.12s;
+  }
+
+  .expand-btn:hover { color: rgba(255,255,255,0.7); }
+
+  .copy-strip {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #f0ede8;
+    border-radius: 10px;
+    padding: 1rem 1.25rem;
+    margin-bottom: 1.25rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+  }
+
+  .copy-strip-text { font-size: 13px; color: #555; line-height: 1.5; }
+  .copy-strip-text strong { color: #111; font-weight: 600; }
+
+  .copy-strip-btn {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 13px; font-weight: 700;
+    padding: 9px 20px; border-radius: 8px;
+    background: #1a1a1a; color: #fff;
+    border: none; cursor: pointer;
+    transition: all 0.15s ease;
+    white-space: nowrap; flex-shrink: 0;
+    display: inline-flex; align-items: center; gap: 7px;
+  }
+
+  .copy-strip-btn:hover {
+    background: #333;
+    transform: translateY(-1px);
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+  }
+
+  .copy-strip-btn.copied { background: #0a5c41; transform: none; box-shadow: none; }
+
+  .reading-card {
+    border: 1px solid #e0ddd8;
+    border-radius: 14px;
+    overflow: hidden;
+    margin-bottom: 1.25rem;
+  }
+
+  .reading-header {
+    padding: 1rem 1.5rem;
+    border-bottom: 1px solid #e0ddd8;
+    background: #fafaf8;
+  }
+
+  .reading-header h3 { font-size: 14px; font-weight: 700; color: #111; letter-spacing: -0.01em; }
+
+  .reading-body { padding: 1.25rem 1.5rem; background: #fff; }
+  .reading-body p { font-size: 13.5px; color: #555; line-height: 1.75; margin-bottom: 0.75rem; }
+  .reading-body p:last-child { margin-bottom: 0; }
+
+  .ideh-row { display: flex; gap: 6px; flex-wrap: wrap; margin: 0.75rem 0; }
+  .ideh-chip { font-size: 11px; font-weight: 600; padding: 4px 11px; border-radius: 99px; }
+  .ideh-i { background: #ede9e3; color: #888; border: 1px solid #ccc; }
+  .ideh-d { background: #fef3e0; color: #9a6000; border: 1px solid #f5d48a; }
+  .ideh-e { background: #e5f5ee; color: #0a5c41; border: 1px solid #9ed8bb; }
+  .ideh-he { background: #e8f0fb; color: #1450a3; border: 1px solid #9dbcf0; }
+
+  .feedback-strip {
+    border: 1px solid #e0ddd8;
+    border-radius: 14px;
+    padding: 1.25rem 1.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 1rem; flex-wrap: wrap;
+    background: #fff;
+  }
+
+  .feedback-text { font-size: 13px; color: #555; line-height: 1.5; }
+  .feedback-text strong { color: #111; font-weight: 600; }
+
+  .feedback-link {
+    font-size: 13px; font-weight: 600; color: #1a1a1a;
+    text-decoration: underline; text-underline-offset: 3px;
+    white-space: nowrap; flex-shrink: 0;
+  }
+
+  @media (max-width: 520px) {
+    .prompt-header { flex-direction: column; align-items: flex-start; }
+    .copy-btn { width: 100%; justify-content: center; }
   }
 </style>
 </head>
 <body>
-<div class="card">
-  <h2 class="headline">
-    Built for where AI is going,
-    <span class="sub">delivered instantly.</span>
-  </h2>
-  <p class="subhead">Most people don't know which part of<br>their AI practice is holding them back. This does.</p>
 
-  <p class="pace">30 seconds.</p>
-  <button class="copy-btn" id="copy-btn" onclick="doCopy()">Copy prompt and paste into your AI</button>
-  <p class="trust"><strong>Privacy first:</strong> No account. No upload. Nothing shared.<br> Works with Claude, ChatGPT, and Gemini.</p>
+<div class="prompt-section">
+  <div class="prompt-header">
+    <div>
+      <div class="prompt-label">The Assessment Prompt</div>
+      <div class="prompt-title">Copy everything below into a new AI conversation</div>
+    </div>
+    <button class="copy-btn" id="copyBtnTop" onclick="copyPrompt('copyBtnTop')">
+      <span>&#x2398;</span>
+      <span>Copy prompt</span>
+    </button>
+  </div>
+
+  <div class="prompt-meta">
+    <span class="meta-item"><span class="meta-dot"></span>CIRA v4.4</span>
+    <span class="meta-item"><span class="meta-dot"></span>CIRF v4.4, IDEH scale</span>
+    <span class="meta-item"><span class="meta-dot"></span>~2,000–2,550 word report</span>
+    <span class="meta-item"><span class="meta-dot"></span>Privacy-preserving</span>
+  </div>
+
+  <div class="prompt-body" id="promptBody">
+    <div class="prompt-text" id="promptText"></div>
+  </div>
+  <div class="prompt-fade" id="promptFade"></div>
+  <button class="expand-btn" id="expandBtn" onclick="toggleExpand()">Show full prompt &#x2193;</button>
+</div>
+
+<div class="copy-strip">
+  <div class="copy-strip-text">
+    <strong>Ready?</strong> Copy the complete prompt and paste it into a new conversation with Claude, ChatGPT, or Gemini.
+  </div>
+  <button class="copy-strip-btn" id="copyBtnBottom" onclick="copyPrompt('copyBtnBottom')">
+    <span>&#x2398;</span> Copy prompt
+  </button>
+</div>
+
+<div class="reading-card">
+  <div class="reading-header">
+    <h3>Reading your results</h3>
+  </div>
+  <div class="reading-body">
+    <p>The IDEH scale describes patterns of practice, not fixed traits. Introductory does not mean unintelligent. Developing does not mean failing. The scale describes what is currently visible in your collaboration behavior — and behavior is exactly what changes with deliberate practice.</p>
+    <div class="ideh-row">
+      <span class="ideh-chip ideh-i">Introductory</span>
+      <span class="ideh-chip ideh-d">Developing</span>
+      <span class="ideh-chip ideh-e">Effective</span>
+      <span class="ideh-chip ideh-he">Highly Effective</span>
+    </div>
+    <p>The most useful part of the report is usually not your ratings — it is the developmental scaffolding in each domain and the closing training prompt. That is where the assessment converts from a snapshot into a starting point.</p>
+  </div>
+</div>
+
+<div class="feedback-strip">
+  <div class="feedback-text">
+    <strong>CIRA is in active development.</strong> If you run the assessment, share what you found — what worked, what felt off, and what was most useful.
+  </div>
+  <a class="feedback-link" href="mailto:wil@whatiflove.org">wil@whatiflove.org &rarr;</a>
 </div>
 
 <script>
-var assessmentPrompt = `You are conducting a Co-Intelligence Readiness Assessment (CIRA v4.4). Your task is to review my conversation history with you and produce an honest, evidence-based report scored against the Co-Intelligence Readiness Framework v4.4 (CIRF v4.4).
+const FULL_PROMPT = `You are conducting a Co-Intelligence Readiness Assessment (CIRA v4.4). Your task is to review my conversation history with you and produce an honest, evidence-based report scored against the Co-Intelligence Readiness Framework v4.4 (CIRF v4.4).
 
 This is not a personality test. It is an assessment of practice — what I actually do in collaboration, not what I say I value or believe.
 
@@ -458,50 +632,75 @@ The user may share this report at their discretion. Do not reference specific pr
 
 Begin the assessment now.`;
 
-function doCopy() {
-  var b = document.getElementById('copy-btn');
+// Render prompt text into the DOM on load
+document.getElementById('promptText').textContent = FULL_PROMPT;
 
-  function showCopied() {
-    b.classList.add('copied');
-    b.textContent = 'Copied — now paste into your AI';
-    setTimeout(function() {
-      b.classList.remove('copied');
-      b.textContent = 'Copy prompt and paste into your AI';
-    }, 3000);
+function copyPrompt(btnId) {
+  const btn = document.getElementById(btnId);
+  const original = btn.innerHTML;
+
+  function onSuccess() {
+    btn.classList.add('copied');
+    btn.innerHTML = '<span>&#x2713;</span> <span>Copied to clipboard</span>';
+    setTimeout(() => {
+      btn.classList.remove('copied');
+      btn.innerHTML = original;
+    }, 2500);
   }
 
-  function fallback() {
-    var t = document.createElement('textarea');
-    t.value = assessmentPrompt;
-    t.style.position = 'fixed';
-    t.style.top = '-9999px';
-    document.body.appendChild(t);
-    t.focus();
-    t.select();
-    try { document.execCommand('copy'); } catch(e) {}
-    document.body.removeChild(t);
-    showCopied();
+  function fallbackCopy() {
+    const ta = document.createElement('textarea');
+    ta.value = FULL_PROMPT;
+    ta.style.cssText = 'position:fixed;top:0;left:0;width:2px;height:2px;opacity:0;';
+    document.body.appendChild(ta);
+    ta.focus();
+    ta.select();
+    try {
+      const ok = document.execCommand('copy');
+      document.body.removeChild(ta);
+      if (ok) { onSuccess(); }
+      else { alert('Copy failed — please select the prompt text manually and copy.'); }
+    } catch(e) {
+      document.body.removeChild(ta);
+      alert('Copy failed — please select the prompt text manually and copy.');
+    }
   }
 
   if (navigator.clipboard && navigator.clipboard.writeText) {
-    navigator.clipboard.writeText(assessmentPrompt)
-      .then(showCopied)
-      .catch(fallback);
+    navigator.clipboard.writeText(FULL_PROMPT).then(onSuccess).catch(fallbackCopy);
   } else {
-    fallback();
+    fallbackCopy();
   }
+}
+
+let expanded = false;
+function toggleExpand() {
+  const body = document.getElementById('promptBody');
+  const btn = document.getElementById('expandBtn');
+  const fade = document.getElementById('promptFade');
+  if (!expanded) {
+    body.style.maxHeight = 'none';
+    body.style.overflowY = 'visible';
+    fade.style.display = 'none';
+    btn.textContent = 'Show less ↑';
+    expanded = true;
+  } else {
+    body.style.maxHeight = '420px';
+    body.style.overflowY = 'auto';
+    fade.style.display = 'block';
+    btn.textContent = 'Show full prompt ↓';
+    expanded = false;
+  }
+  notifyHeight();
 }
 
 function notifyHeight() {
   const h = document.body.scrollHeight;
   window.parent.postMessage({ type: 'cira-resize', height: h }, '*');
 }
-window.addEventListener('load', () => setTimeout(notifyHeight, 200));
-window.addEventListener('resize', () => setTimeout(notifyHeight, 100));
 
-if (window.ResizeObserver) {
-  new ResizeObserver(() => setTimeout(notifyHeight, 100)).observe(document.body);
-}
+window.addEventListener('load', () => setTimeout(notifyHeight, 200));
+window.addEventListener('resize', notifyHeight);
 </script>
 </body>
 </html>
